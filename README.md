@@ -22,6 +22,16 @@ The goal is to progressively improve GPU efficiency through:
 
 ---
 
+## ⚖️ Comparison Overview
+
+| Implementation      | Passes | Memory Access |  Efficiency | Notes                               |
+| :------------------ | :----: | :-----------: | :---------: | :---------------------------------- |
+| **Naive**           |    3   |      High     |    🔴 Low   | Atomic ops & race conditions        |
+| **Reduction-Based** |    2   |     Medium    | 🟠 Moderate | Shared memory, but multi-pass       |
+| **Fused (Online)**  |    1   |      Low      |   🟢 High   | FlashAttention-inspired single-pass |
+
+---
+
 ## Comparison Summary
 
 | Kernel            |                   Naive                  |                Reduction-Based               |         Next (Planned)        |
