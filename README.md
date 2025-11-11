@@ -1,14 +1,14 @@
-# CUDA Kernel Optimization Study for Softmax
+# CUDA Kernel Optimization for Softmax
 
-### Naive → Reduction-Based → (Upcoming) Warp-Level Optimized
+### Naive → Reduction-Based → Warp-Level Optimized
 
-This repository explores how **CUDA kernel design** impacts performance across three fundamental operations — **Addition**, **Normalization**, and **Softmax**.
+This repository explores how **CUDA kernel** impacts performance for the **Softmax** function.
 
 The goal is to progressively improve GPU efficiency through:
 
-1. Naive implementations (baseline)
-2. Reduction-based optimizations
-3. (Next) Warp-level and fused-kernel designs
+version 1 : Naive implementations (baseline)
+version 2 : Reduction-based optimizations
+version 3 : Warp-level and fused-kernel designs
 
 ---
 
