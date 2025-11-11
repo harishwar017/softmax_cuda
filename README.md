@@ -6,9 +6,9 @@ This repository explores how **CUDA kernel** impacts performance for the **Softm
 
 The goal is to progressively improve GPU efficiency through:
 
-version 1 : Naive implementations (baseline)
-version 2 : Reduction-based optimizations
-version 3 : Warp-level and fused-kernel designs
+* version 1 : Naive implementations (baseline)
+* version 2 : Reduction-based optimizations
+* version 3 : Warp-level and fused-kernel designs
 
 ---
 
