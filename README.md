@@ -1,20 +1,20 @@
 # CUDA Kernel Optimization for Softmax
 
-# GPU used: Nvidia A100 80GB
-# Code in Cuda C++
-# Profiling tools used: Nsight Systems, Nsight compute
-# N = 10^8 (10 million)
-# v4 is the final submission from my end for the assignment
-# v5 is just an experimental endeavor for me to learn more about flash attn's implementation
+* GPU used: Nvidia A100 80GB
+* Code in Cuda C++
+* Profiling tools used: Nsight Systems, Nsight compute
+* N = 10^8 (10 million)
+* v4 is the final submission from my end for the assignment
+* v5 is just an experimental endeavor for me to learn more about flash attn's implementation
 
-# I evaluated the functional correctness by making sure adding all the softmax of terms to see if they are ~ 1.0
+* I evaluated the functional correctness by making sure adding all the softmax of terms to see if they are ~ 1.0
 
-# Kernels you would see in all implementations (except v5):
-# Norm_kernel: Finds maximum to subtract it with all the terms to prevent overflow
-# Addition_kernel: Computes the denominator for the softmax doing sum(e(x - max))
-# Softmax_kernel: With the maximum and the summation computed by the orevious kernels we finally calculate e(x - max)/sum(e(x - max))
+* Kernels you would see in all implementations (except v5):
+* Norm_kernel: Finds maximum to subtract it with all the terms to prevent overflow
+* Addition_kernel: Computes the denominator for the softmax doing sum(e(x - max))
+* Softmax_kernel: With the maximum and the summation computed by the orevious kernels we finally calculate e(x - max)/sum(e(x - max))
 
-# I have ordered my implementations version wise, starting with v1, a naive implementation I did as soon I learnt CUDA with lots of atomic operation for adding, then comes v2 where used block wise reduction and one atomic operation per block for adding while for the norm_kernel, block wise maximums are copied back to host where the global max is calculated (I did this because the version of CUDA I use doesnt supprt atomicMax for floating point). Further in v3 I avoid the device to host memcpy bottleneck by implementing hierarchical reduction. And in v4 I use warp level optimisation in reduction when size is less than 32. Now in v5 i tried to fuse all kernels into one using online softmax and failed miserably.
+* I have ordered my implementations version wise, starting with v1, a naive implementation I did as soon I learnt CUDA with lots of atomic operation for adding, then comes v2 where used block wise reduction and one atomic operation per block for adding while for the norm_kernel, block wise maximums are copied back to host where the global max is calculated (I did this because the version of CUDA I use doesnt supprt atomicMax for floating point). Further in v3 I avoid the device to host memcpy bottleneck by implementing hierarchical reduction. And in v4 I use warp level optimisation in reduction when size is less than 32. Now in v5 i tried to fuse all kernels into one using online softmax and failed miserably.
 
 ### Naive → Reduction-Based → Warp-Level Optimized
 
