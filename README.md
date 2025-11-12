@@ -1,10 +1,13 @@
 # **CUDA Kernel Optimization for Softmax**
+This project gave me a real taste of CUDA optimization and I learned a lot trying to optimise it. I think now I can safely say GPUs aren't a black box anymore, now that I got to work with whats under the hood!
+
+I have tried implementing GPU kernels to calculate the softmax of a given set of numbers. I am making this repo so it is easy for me to organise everything and share it!
 
 **Environment & Setup**
 
 * **GPU Used:** Nvidia A100 80GB
 * **Language:** CUDA C++
-* **Profiling Tools:** Nsight Systems, Nsight Compute
+* **Profiling Tools:** Nsight Systems, Nsight Compute (I have added those metrics in each version's readme file)
 * **Input Size:** N = 10⁸ (100 million)
 * **Notes:**
 
@@ -23,6 +26,7 @@ All implementations (except **v5**) include the following kernels:
 * **`Softmax_kernel`** – Computes the final softmax values as `exp(x - max) / sum(exp(x - max))`.
 
 ---
+I organized my implementations version-wise, starting with v1, a naive CUDA attempt packed with atomic operations. v2 added block-wise reduction with one atomic per block, and v3 removed the host-device bottleneck using hierarchical reduction. v4 brought in warp-level optimization for smaller blocks, and v5 was my experimental try at fusing everything into one kernel with online softmax — inspired by FlashAttention but not quite there yet.
 
 ## **Implementation Evolution**
 
