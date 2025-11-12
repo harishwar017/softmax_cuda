@@ -28,6 +28,10 @@ All implementations (except **v5**) include the following kernels:
 
 The versions are arranged in order of increasing optimization and complexity:
 
+**Naive → Reduction-Based → Hierarchical → Warp-Level → Fused**
+
+Goal: **Progressively improve GPU efficiency by removing bottlenecks.**
+
 | Version                                | Description                                                                                                                           |
 | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
 | **v1 – Naive**                         | Direct global memory access, heavy use of atomic operations, 3 kernel launches.                                                       |
@@ -36,25 +40,6 @@ The versions are arranged in order of increasing optimization and complexity:
 | **v4 – Warp-Level Optimized**          | Adds warp-level optimizations for reductions when block size < 32, removing the need for `__syncthreads()`.                           |
 | **v5 – Experimental (Online Softmax)** | Attempts to fuse all kernels into one using an online softmax approach inspired by FlashAttention (didn’t work as intended).          |
 
----
-
-### **Progression Summary**
-
-> **Naive → Reduction-Based → Hierarchical → Warp-Level → Fused**
-
-Goal: **Progressively improve GPU efficiency by removing bottlenecks.**
-
-* **v1:** Naive baseline
-* **v2:** Shared-memory reduction
-* **v3:** Hierarchical reduction (fully on-device)
-* **v4:** Warp-level optimization
-* **v5:** Experimental fused online softmax
-
----
-
-## **Comparison Overview**
-
-Since softmax is a **memory-bound operation**, each version focuses on improving memory access patterns.
 
 ### **Naive Implementation**
 
@@ -65,21 +50,6 @@ Since softmax is a **memory-bound operation**, each version focuses on improving
 
 * Lower **DRAM Throughput** (goal)
 * Higher **L1 / Shared Memory Hit Rate**
-
----
-
-## **Key Takeaways**
-
-* **Atomic operations** severely limit performance; reduction-based approaches mitigate this.
-* **Shared memory** drastically improves throughput by reducing global memory traffic.
-* **Warp-level primitives** push performance further by optimizing reductions at the warp level.
-* **Fused kernels** (e.g., online softmax) could yield further gains — still in progress.
-
----
-
-## **To-Do**
-
-* [ ] **Fuse softmax passes** — combine exponentiation, reduction, and normalization into a single efficient kernel.
 
 ---
 
@@ -96,5 +66,3 @@ cuda-kernels/
 ```
 
 ---
-
-Would you like me to format it in **Markdown for GitHub** style (with collapsible sections or table of contents), or keep it as a **plain-text technical report style** like above?
