@@ -8,7 +8,7 @@ I have tried implementing GPU kernels to calculate the softmax of a given set of
 * **GPU Used:** Nvidia A100 80GB
 * **Language:** CUDA C++
 * **Profiling Tools:** Nsight Systems, Nsight Compute (I have added those metrics in each version's readme file)
-* **Input Size:** N = 10⁸ (100 million)
+* **Input Size:** N = 10^7 (10 million)
 * **Notes:**
 
   * **v4** is the final submission version.
