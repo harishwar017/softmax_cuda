@@ -1,4 +1,4 @@
-# Softmax V5
+# Softmax V4
 
 # Improved CUDA Kernels (Hierarchical Reduction Based)
 

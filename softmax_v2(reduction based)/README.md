@@ -26,7 +26,6 @@ Performs normalization across input elements (e.g., finding max or sum).
 **Observation:**
 
 > Excellent utilization of both **compute** and **memory bandwidth** (>80%).
-> This kernel demonstrates balanced performance and minimal idle cycles — indicating effective parallelization and good memory access patterns.
 
 ---
 
@@ -71,8 +70,7 @@ Computes the exponential normalization (Softmax) operation.
 
 **Observation:**
 
-> Moderate performance — compute and memory utilization both near 50%.
-> Kernel efficiency is limited by **multiple passes** and **global memory writes** between exponentiation, reduction, and normalization steps.
+> Moderate performance, compute and memory utilization both near 50%.
 
 ---
 
@@ -81,7 +79,7 @@ Computes the exponential normalization (Softmax) operation.
 | Kernel            | Previous Compute Throughput | New Compute Throughput |     Improvement     |
 | :---------------- | :-------------------------: | :--------------------: | :-----------------: |
 | `norm_kernel`     |           72.66 %           |       **72.74 %**      |          —          |
-| `addition_kernel` |            0.30 %           |       **64.26 %**      | 🔼 **~213× higher** |
+| `addition_kernel` |            0.30 %           |       **64.26 %**      |    **~213× higher** |
 | `softmax_kernel`  |           48.31 %           |       **48.24 %**      |          —          |
 
 **Key Takeaway:**
@@ -103,11 +101,7 @@ Despite performance gains, several limitations persist:
 2. **Lack of Warp-Level Optimizations**
 
    * Reduction operations are not optimized using **warp shuffle** or **warp-synchronous primitives**, leaving performance untapped.
-
-3. **Memory Coalescing Issues**
-
-   * Memory accesses are not fully coalesced, leading to non-optimal DRAM utilization.
-
+  
 ---
 
 ## Planned Improvements (Next Version)
@@ -124,16 +118,4 @@ Despite performance gains, several limitations persist:
 
    * Fuse operations where possible to reduce kernel launch overhead and improve cache locality.
 
-4. **Enhanced Memory Coalescing**
-
-   * Restructure data layout to ensure consecutive threads access consecutive memory addresses.
-
 ---
-
-## Summary
-
-| Kernel            | Compute Efficiency | Memory Efficiency | Status                   |
-| :---------------- | :----------------: | :---------------: | :----------------------- |
-| `norm_kernel`     |       🟢 High      |      🟢 High      | Optimized                |
-| `addition_kernel` |       🟢 High      |      🟢 High      | Greatly Improved         |
-| `softmax_kernel`  |     🟠 Moderate    |    🟠 Moderate    | Multi-pass, needs fusion |

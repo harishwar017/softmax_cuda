@@ -2,8 +2,7 @@
 
 # Naive CUDA Kerne implementation for softmax
 
-This folder contains a set of **CUDA kernel implementations** for **softmax** — along with profiling and performance analysis.
-The goal is to understand **GPU performance characteristics**, **memory throughput**, and **kernel efficiency**, serving as a baseline for future optimization.
+This folder contains a set of **CUDA kernel implementations** for my naive implementation of **softmax**
 
 ## Kernels Implemented
 
@@ -25,13 +24,13 @@ Performs element-wise vector addition on the GPU.
 **Observation:**
 
 > This kernel exhibits **low compute throughput** and **low memory bandwidth utilization**.
-> Achieved performance is below 60 % of the device’s peak — typically indicating **latency-bound execution**, possibly due to inefficient memory access and lack of parallelism.
+> Achieved performance is below 60 % of the device’s peak, typically indicating **latency-bound execution**, possibly due to inefficient memory access and lack of parallelism (atomic add).
 
 ---
 
 ### 2. `norm_kernel`
 
-Computes the normalization factor (e.g., max or sum-based normalization).
+Computes the normalization factor (finds max).
 
 **Performance Summary:**
 
@@ -47,7 +46,6 @@ Computes the normalization factor (e.g., max or sum-based normalization).
 **Observation:**
 
 > This kernel utilizes **>80 %** of the available compute and memory performance, indicating **good parallel efficiency** and **well-balanced workload distribution**.
-> The implementation scales effectively across threads and minimizes memory latency.
 
 ---
 
@@ -69,7 +67,6 @@ Computes the exponential normalization (Softmax) operation.
 **Observation:**
 
 > The kernel demonstrates **moderate utilization**, with compute and memory throughput both below 60 %.
-> This suggests **latency issues** and possible underutilization of GPU resources due to **excessive global memory access** or **synchronization overheads**.
 
 ---
 
