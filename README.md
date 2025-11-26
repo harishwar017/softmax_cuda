@@ -1,7 +1,7 @@
 # **CUDA Kernel Optimization for Softmax**
-This project gave me a real taste of CUDA optimization and I learned a lot trying to optimise it. I think now I can safely say GPUs aren't a black box anymore, now that I got to work with whats under the hood!
+This project introduced me to CUDA optimization, and I learned a lot digging into how GPUs work beyond the surface.
 
-I have tried implementing GPU kernels to calculate the softmax of a given set of numbers. I am making this repo so it is easy for me to organise everything and share it!
+I implemented GPU softmax kernels, and I’m creating this repo to keep the work organized and easy to share.
 
 **Environment & Setup**
 
